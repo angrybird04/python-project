@@ -4,8 +4,8 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 
-ser_obj = Service(r"C:\Users\All might\Downloads\chromedriver\chromedriver")
-driver = webdriver.Chrome(service=ser_obj)
+ser_obj = Service("/Users/ujjwalsingh/Downloads/msedgedriver")
+driver = webdriver.Edge(service=ser_obj)
 driver.maximize_window()
 driver.get("https://testautomationpractice.blogspot.com/")
 
