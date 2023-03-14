@@ -56,14 +56,14 @@ time.sleep(1)
 
 driver.find_element(By.ID,"age").send_keys("28")
 
-driver.find_element(By.LINK_TEXT,"mariusFM77").click()
-print(driver.title)
+# driver.find_element(By.LINK_TEXT,"mariusFM77").click()
+# print(driver.title)
 
 # windowid = driver.window_handles
 # if driver.title =="mariusFM77 Stock Image and Video Portfolio - iStock":
 #     driver.close()
 
-driver.back
+# driver.back
 
 time.sleep(2)
 driver.switch_to.frame('frame-one1434677811')
@@ -89,6 +89,8 @@ time.sleep(1)
 # driver.find_element(By.CSS_SELECTOR,"#frame-one1434677811").click()
 day = driver.find_element(By.XPATH,"//label[@for='RESULT_CheckBox-8_1']")
 day.click()
+day = driver.find_element(By.XPATH,"//label[@for='RESULT_CheckBox-8_4']")
+day.click()
 time.sleep(1)
 dropdown=driver.find_element(By.ID,"RESULT_RadioButton-9")
 # dropdown.click()
@@ -99,9 +101,9 @@ time.sleep(1)
 # driver.find_element(By.XPATH,"//*[@id='RESULT_RadioButton-9']/option[3]").click()
 driver.find_element(By.ID,"FSsubmit").click()
 
-# s=driver.find_element(By.ID,"content").text
-# if s =="The result storage capacity has been reached for this form. Your result was not created. Please contact the form owner.":
-#     print("\nLogin failed\n")
-# else:
-#     print("\n Login successful\n")
-# time.sleep(3)
+s=driver.find_element(By.ID,"content").text
+if s =="The result storage capacity has been reached for this form. Your result was not created. Please contact the form owner.":
+    print("\nLogin failed\n")
+else:
+    print("\n Login successful\n")
+time.sleep(3)
