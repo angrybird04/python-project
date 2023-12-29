@@ -7,7 +7,9 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 
-'''
+serv_obj = Service("/Users/ujjwalsingh/Downloads/geckodriver")
+driver = webdriver.Firefox(service=serv_obj)
+driver.maximize_window()
 driver.get("https://rahulshettyacademy.com/seleniumPractise/#/")
 driver.find_element(By.XPATH, "//input[@type='search']").send_keys("ber")
 # time.sleep(3)
@@ -20,12 +22,10 @@ list2 = ["Cucumber - 1 Kg", "Raspberry - 1/4 Kg", "Strawberry - 1/4 Kg"]
 vegetable = driver.find_elements(By.XPATH, "//div[@class='products']//div//h4[@class='product-name']")
 count = len(vegetable)
 print(type(vegetable))
+list22 = []
 for i in range(count):
-    if vegetable[i].text == list2[i]:
-        print("Quantity matched")
+    list22 = vegetable[i]
 
-assert vegetable == list2
-# assert vegetable == list2
 driver.find_element(By.XPATH, '//*[@id="root"]/div/header/div/div[3]/a[4]/img').click()
 driver.find_element(By.XPATH, '//*[@id="root"]/div/header/div/div[3]/div[2]/div[2]/button').click()
 time.sleep(3)
@@ -34,6 +34,10 @@ a = driver.find_elements(By.XPATH, '//*[@id="productCartTables"]/tbody/tr/td[5]/
 for i in range(len(a)):
     ab = int(a[i].text)
     s = s + ab
+veggies = driver.find_elements(By.CSS_SELECTOR, "p.product-name")
+for veg in veggies:
+    list2.append(veg.text)
+
 print(float(s - s / 10))
 a = driver.find_element(By.XPATH, "//span[@class = 'discountAmt']").text
 totalamount = int(driver.find_element(By.XPATH, "//span[@class = 'totAmt']").text)
@@ -63,56 +67,4 @@ time.sleep(5)
 # driver.find_element(By.XPATH, '//*[@id="root"]/div/div/div/div/button').click()
 #  time.sleep(5)
 driver.quit()
-'''
 
-serv_obj = Service("/Users/ujjwalsingh/Downloads/geckodriver")
-driver = webdriver.Firefox(service=serv_obj)
-driver.maximize_window()
-
-list22 = []
-list2 = []
-
-driver.get("https://rahulshettyacademy.com/seleniumPractise/")
-driver.find_element(By.CSS_SELECTOR, "input.search-keyword").send_keys("ber")
-time.sleep(4)
-count = len(driver.find_elements(By.XPATH, "//div[@class='products']/div"))
-assert count == 3
-buttons = driver.find_elements(By.XPATH, "//div[@class='product-action']/button")
-# //div[@class='product-action']/button/parent::div/parent::div/h4
-for button in buttons:
-    list22.append(button.find_element(By.XPATH, "parent::div/parent::div/h4").text)
-    button.click()
-print(list22)
-
-driver.find_element(By.CSS_SELECTOR, "img[alt='Cart']").click()
-driver.find_element(By.XPATH, "//button[text()='PROCEED TO CHECKOUT']").click()
-wait = WebDriverWait(driver, 8)
-wait.until(expected_conditions.presence_of_element_located((By.CLASS_NAME, "promoCode")))
-
-veggies = driver.find_elements(By.CSS_SELECTOR, "p.product-name")
-for veg in veggies:
-    list2.append(veg.text)
-
-print(list2)
-assert list22 == list2
-originalAmount = driver.find_element(By.CSS_SELECTOR, ".discountAmt").text
-driver.find_element(By.CLASS_NAME, "promoCode").send_keys("rahulshettyacademy")
-driver.find_element(By.CSS_SELECTOR, ".promoBtn").click()
-
-wait.until(expected_conditions.presence_of_element_located((By.CSS_SELECTOR, "span.promoInfo")))
-discountAmount = driver.find_element(By.CSS_SELECTOR, ".discountAmt").text
-
-assert float(discountAmount) < int(originalAmount)
-
-print(driver.find_element(By.CSS_SELECTOR, "span.promoInfo").text)
-
-amounts = driver.find_elements(By.XPATH, "//tr/td[5]/p")
-sum = 0
-for amount in amounts:
-    sum = sum + int(amount.text)  # 32+48+60
-
-print(sum)
-
-totalAmount = int(driver.find_element(By.CLASS_NAME, "totAmt").text)
-
-assert sum == totalAmount
